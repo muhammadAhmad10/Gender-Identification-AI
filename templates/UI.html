@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      #container-fluid {
+        min-height: 100vh;
+        background: linear-gradient(to right, #ed4259, #eb5858, #ed4242);
+      }
+      p {
+        font-size: 1.3rem;
+      }
+      img {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        width: 300px;
+        height: 300px;
+      }
+      #form-container,
+      #input {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+    </style>
+    <script>
+      function showPreview(event) {
+        event.preventDefault();
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function () {
+          var img = document.getElementById("preview-img");
+          img.src = reader.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    </script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="container-fluid" class="container-fluid text-light">
+      <div class="container-fluid pt-4 mb-4">
+        <h1 class="text-center">Gender Identification</h1>
+        <p class="text-center">
+          Upload image of a person to check whether the person is male or
+          female.
+        </p>
+      </div>
+      <div class="container-fluid" id="form-container">
+        <form
+          class="form-inline"
+          action="UI"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <div class="form-group container-fluid" id="input">
+            <label for="file" class="sr-only">File</label>
+            <input
+              type="file"
+              class="form-control-file"
+              id="file"
+              name="file"
+              required
+              onchange="showPreview(event)"
+            />
+
+            <img id="preview-img" src="{{image_path}}" alt="placeholder" />
+            <p class="text-center">This person is <b>{{result}}</b></p>
+          </div>
+          <button
+            id="check"
+            type="submit"
+            class="btn btn-primary mb-2"
+            name="submit"
+          >
+            Check Gender
+          </button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
